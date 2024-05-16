@@ -90,7 +90,39 @@ void PostPlant() {
 }
 
 void AdoptPlant() {
-    Console.WriteLine("Adopt plant");
+
+    
+
+    for (int i = 0; i < plants.Count; i++)
+    {
+        if (!plants[i].Sold)
+        {
+        Console.WriteLine($"{i + 1}. {plants[i].Species}");
+        }
+    }
+
+    Plant chosenPlant = null;
+
+    while (chosenPlant == null)
+    {
+        Console.WriteLine($"Please enter the plant number you wish to adopt:");
+        try
+        {
+            int response = int.Parse(Console.ReadLine().Trim());
+            chosenPlant = plants[response - 1];
+
+            chosenPlant.Sold = true;
+            
+        }
+        catch (FormatException)
+        {
+        Console.WriteLine("Please type only integers!");
+        }
+        catch (ArgumentOutOfRangeException)
+        {
+        Console.WriteLine("Please choose an existing item only!");
+        }
+}
 }
 
 void DelistPlant() {
