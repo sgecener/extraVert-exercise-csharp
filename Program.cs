@@ -43,7 +43,7 @@
         AskingPrice = 7.00M,
         City = "Nashville",
         ZipCode = 37217,
-        Sold = false
+        Sold = true
     }
 };
 
@@ -55,6 +55,10 @@ MainMenu();
 
 void DisplayPlants() {
     Console.WriteLine("Display All Plants");
+    for (int i = 0; i < plants.Count; i++)
+    {
+        Console.WriteLine($"{i + 1}. {plants[i].Species} in {plants[i].City} {(plants[i].Sold ? "was sold" : "is available")} for {plants[i].AskingPrice} dollars");
+    }
 }
 
 void PostPlant() {
