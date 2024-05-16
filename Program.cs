@@ -47,7 +47,8 @@
     }
 };
 
-
+Random random = new Random();
+int randomInteger = random.Next(1, plants.Count + 1);
 
 string greeting = "ExtraVert! not introvert";
 Console.WriteLine(greeting);
@@ -150,6 +151,13 @@ void DelistPlant() {
 
     }
 
+void RandomPlant() {
+
+    Plant randomPlant = plants[randomInteger];
+
+    Console.WriteLine($"\n{randomPlant.Species} is located in {randomPlant.City}.\nLight Need: {randomPlant.LightNeeds}\nPrice: {randomPlant.AskingPrice}");
+
+}
 
 
 void Exit() {
@@ -161,15 +169,19 @@ void InvalidOption() {
 }
 
 
+
 void MainMenu() {
     
     
     Console.WriteLine(@"Choose an option:
-                        0. Exit
                         1. Display Plants
                         2. Post your plant!
                         3. Adopt a Plant!
-                        4. Delist plant");
+                        4. Delist plant
+                        5. Randomize a Plant
+                        0. Exit
+                        ");
+                        
     
 
     string choice = Console.ReadLine();
@@ -199,6 +211,11 @@ void MainMenu() {
         case "4":
             Console.Clear();
             DelistPlant();
+            MainMenu();
+            break;
+        case "5":
+            Console.Clear();
+            RandomPlant();
             MainMenu();
             break;
         default:
