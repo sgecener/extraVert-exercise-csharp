@@ -159,6 +159,31 @@ void RandomPlant() {
 
 }
 
+void SearchByLight() {
+
+    Console.WriteLine("Search By Light Need:");
+
+    int response = int.Parse(Console.ReadLine().Trim());
+
+    List<Plant> lightNeed = new List<Plant>();
+
+    foreach (Plant plant in plants) {
+        if (response < 1 || response > 5)
+        {
+            Console.WriteLine("Option isn't valid...");
+        }
+
+        if (response >= plant.LightNeeds) {
+            lightNeed.Add(plant);
+        }
+    }
+    for (int i = 0; i < lightNeed.Count; i++)
+    {
+        Console.WriteLine($"{i + 1}. {lightNeed[i].Species}");
+    }
+
+}
+
 
 void Exit() {
     Console.WriteLine("Goodbye!");
@@ -179,6 +204,7 @@ void MainMenu() {
                         3. Adopt a Plant!
                         4. Delist plant
                         5. Randomize a Plant
+                        6. Search Plant by Light Need
                         0. Exit
                         ");
                         
@@ -216,6 +242,11 @@ void MainMenu() {
         case "5":
             Console.Clear();
             RandomPlant();
+            MainMenu();
+            break;
+        case "6":
+            Console.Clear();
+            SearchByLight();
             MainMenu();
             break;
         default:
