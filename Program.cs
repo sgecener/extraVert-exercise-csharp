@@ -62,7 +62,31 @@ void DisplayPlants() {
 }
 
 void PostPlant() {
-  Console.WriteLine("Post plant");
+ // Console.WriteLine("\nYou chose option 2\n");
+    Console.WriteLine("Please enter a species:\n");
+
+    Plant newPlant = new Plant();
+
+    Console.WriteLine("Enter a plant species:\n");
+    newPlant.Species = Console.ReadLine();
+
+    Console.WriteLine("Enter the plant's light needs (1 for low light, 5 for heavy light)\n");
+    newPlant.LightNeeds = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Enter an asking price:\n");
+    newPlant.AskingPrice = decimal.Parse(Console.ReadLine());
+
+    Console.WriteLine("Enter a city:\n");
+    newPlant.City = Console.ReadLine();
+
+    Console.WriteLine("Enter a ZIP:\n");
+    newPlant.ZipCode = int.Parse(Console.ReadLine());
+
+    newPlant.Sold = false;
+
+    plants.Add(newPlant);
+
+
 }
 
 void AdoptPlant() {
