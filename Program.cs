@@ -91,8 +91,6 @@ void PostPlant() {
 
 void AdoptPlant() {
 
-    
-
     for (int i = 0; i < plants.Count; i++)
     {
         if (!plants[i].Sold)
@@ -126,8 +124,33 @@ void AdoptPlant() {
 }
 
 void DelistPlant() {
-    Console.WriteLine("Delist plant");
-}
+    
+
+    for (int i = 0; i < plants.Count; i++)
+    {
+        Console.WriteLine($"{i + 1}. {plants[i].Species}");
+    }
+
+    
+        Console.WriteLine("Choose a plant to delist:");
+        try {
+            int response = int.Parse(Console.ReadLine().Trim());
+            
+
+            plants.RemoveAt(response - 1);
+        }
+        catch (FormatException)
+        {
+        Console.WriteLine("Please type only integers!");
+        }
+        catch (ArgumentOutOfRangeException)
+        {
+        Console.WriteLine("Please choose an existing item only!");
+        }
+
+    }
+
+
 
 void Exit() {
     Console.WriteLine("Goodbye!");
