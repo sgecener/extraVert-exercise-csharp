@@ -240,6 +240,38 @@ void InvalidOption() {
     Console.WriteLine("That doesn't exist.. try again!");
 }
 
+void PlantStatistics() {
+    if (plants.Count == 0) {
+        Console.WriteLine("No plants available to display statistics.");
+        return;
+    }
+
+    // Lowest price plant name
+    Plant cheapestPlant = plants.OrderBy(p => p.AskingPrice).First();
+    Console.WriteLine($"Cheapest plant: {cheapestPlant.Species} (${cheapestPlant.AskingPrice})");
+
+    // Number of plants available (not sold, and still available)
+    int availablePlantsCount = plants.Count(p => !p.Sold && p.ExpirationDate >= DateTime.Today);
+    Console.WriteLine($"Number of plants available: {availablePlantsCount}");
+
+    // Name of plant with highest light needs
+    Plant highestLightNeedsPlant = plants.OrderByDescending(p => p.LightNeeds).First();
+    Console.WriteLine($"Plant with highest light needs: {highestLightNeedsPlant.Species} (Light Needs: {highestLightNeedsPlant.LightNeeds})");
+
+    // Average light needs
+    double averageLightNeeds = plants.Average(p => p.LightNeeds);
+    Console.WriteLine($"Average light needs: {averageLightNeeds:F2}");
+
+    // Percentage of plants adopted
+    double percentageAdopted = (double)plants.Count(p => p.Sold) / plants.Count * 100;
+    Console.WriteLine($"Percentage of plants adopted: {percentageAdopted:F2}%");
+
+    Console.WriteLine("\n0. Main Menu");
+    if (Console.ReadLine() == "0")
+    {
+        MainMenu();
+    }
+}
 
 
 void MainMenu() {
@@ -252,6 +284,7 @@ void MainMenu() {
                         4. Delist plant
                         5. Randomize a Plant
                         6. Search Plant by Light Need
+                        7. Plant Statistics
                         0. Exit
                         ");
                         
@@ -296,6 +329,10 @@ void MainMenu() {
             SearchByLight();
             MainMenu();
             break;
+        case "7":
+            Console.Clear();
+            PlantStatistics();
+            break;
         default:
             Console.Clear();
             InvalidOption();
@@ -303,4 +340,7 @@ void MainMenu() {
             break;
     }
 }
+
+
+
 
