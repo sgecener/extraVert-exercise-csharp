@@ -111,18 +111,20 @@ void PostPlant() {
         Console.WriteLine("Enter the expiration date (MM/dd/yyyy):\n");
         string dateInput = Console.ReadLine();
 
-        if (DateTime.TryParseExact(dateInput, "MM/dd/yyyy", null, System.Globalization.DateTimeStyles.None, out expirationDate))
+        try 
         {
+            DateTime.TryParseExact(dateInput, "MM/dd/yyyy", null, System.Globalization.DateTimeStyles.None, out expirationDate);
+
             if (expirationDate.Date >= DateTime.Today)
             {
                 break; // Exit the loop if date is valid and not before today
             }
             else
             {
-                Console.WriteLine("The expiration date cannot be before the current date. Please try again.");
+                Console.WriteLine("The expiration date cannot be before the current date or a non-existent date. Please try again.");
             }
         }
-        else
+        catch
         {
             Console.WriteLine("Invalid date format. Please try again.");
         }
@@ -143,7 +145,7 @@ void AdoptPlant() {
     {
         if (!plants[i].Sold && plants[i].ExpirationDate >= DateTime.Now)
         {
-        Console.WriteLine($"{i + 1}. {plants[i].Species}");
+        Console.WriteLine($"{i + 1}. {PlantDetails(plants[i])}");
         }
     }
 
@@ -176,7 +178,7 @@ void DelistPlant() {
 
     for (int i = 0; i < plants.Count; i++)
     {
-        Console.WriteLine($"{i + 1}. {plants[i].Species}");
+        Console.WriteLine($"{i + 1}. {PlantDetails(plants[i])}");
     }
 
     
@@ -342,5 +344,11 @@ void MainMenu() {
 }
 
 
+string PlantDetails(Plant plant)
+{
+    string plantString = plant.Species;
 
+    return plantString;
+
+}
 
