@@ -7,7 +7,9 @@
         AskingPrice = 1.00M,
         City = "Nashville",
         ZipCode = 37216,
-        Sold = false
+        Sold = false,
+        ExpirationDate = new DateTime(2024, 5, 30)
+
     },
     new Plant()
     {
@@ -16,7 +18,9 @@
         AskingPrice = 6.00M,
         City = "Nashville",
         ZipCode = 37217,
-        Sold = false
+        Sold = false,
+        ExpirationDate = new DateTime(2024, 5, 30)
+
     },
     new Plant()
     {
@@ -25,7 +29,9 @@
         AskingPrice = 5.00M,
         City = "Nashville",
         ZipCode = 37211,
-        Sold = false
+        Sold = true,
+        ExpirationDate = new DateTime(2024, 5, 13)
+
     },
     new Plant()
     {
@@ -34,7 +40,9 @@
         AskingPrice = 10.00M,
         City = "Nashville",
         ZipCode = 37214,
-        Sold = false
+        Sold = false,
+        ExpirationDate = new DateTime(2024, 5, 13)
+
     },
     new Plant()
     {
@@ -43,7 +51,9 @@
         AskingPrice = 7.00M,
         City = "Nashville",
         ZipCode = 37217,
-        Sold = true
+        Sold = true,
+        ExpirationDate = new DateTime(2024, 5, 30)
+
     }
 };
 
@@ -71,8 +81,20 @@ void PostPlant() {
     Console.WriteLine("Enter a plant species:\n");
     newPlant.Species = Console.ReadLine();
 
-    Console.WriteLine("Enter the plant's light needs (1 for low light, 5 for heavy light)\n");
-    newPlant.LightNeeds = int.Parse(Console.ReadLine());
+    int lightNeeds;
+    while (true)
+    {
+        Console.WriteLine("Enter the plant's light needs (1 for low light, 5 for heavy light):\n");
+        if (int.TryParse(Console.ReadLine(), out lightNeeds) && lightNeeds >= 1 && lightNeeds <= 5)
+        {
+            newPlant.LightNeeds = lightNeeds;
+            break; // Exit the loop if input is valid
+        }
+        else
+        {
+            Console.WriteLine("Invalid input. Please enter a number between 1 and 5.");
+        }
+    }
 
     Console.WriteLine("Enter an asking price:\n");
     newPlant.AskingPrice = decimal.Parse(Console.ReadLine());
@@ -83,18 +105,43 @@ void PostPlant() {
     Console.WriteLine("Enter a ZIP:\n");
     newPlant.ZipCode = int.Parse(Console.ReadLine());
 
+     DateTime expirationDate;
+    while (true)
+    {
+        Console.WriteLine("Enter the expiration date (MM/dd/yyyy):\n");
+        string dateInput = Console.ReadLine();
+
+        if (DateTime.TryParseExact(dateInput, "MM/dd/yyyy", null, System.Globalization.DateTimeStyles.None, out expirationDate))
+        {
+            if (expirationDate.Date >= DateTime.Today)
+            {
+                break; // Exit the loop if date is valid and not before today
+            }
+            else
+            {
+                Console.WriteLine("The expiration date cannot be before the current date. Please try again.");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Invalid date format. Please try again.");
+        }
+    }
+
+    newPlant.ExpirationDate = expirationDate;
+
     newPlant.Sold = false;
 
     plants.Add(newPlant);
 
-
+    Console.WriteLine("Plant added successfully!");
 }
 
 void AdoptPlant() {
 
     for (int i = 0; i < plants.Count; i++)
     {
-        if (!plants[i].Sold)
+        if (!plants[i].Sold && plants[i].ExpirationDate >= DateTime.Now)
         {
         Console.WriteLine($"{i + 1}. {plants[i].Species}");
         }
